@@ -10,20 +10,23 @@
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Name" v-model="list.name">
+                        <input :class="{'is-danger': errors.name}" class="input" type="text" placeholder="Name" v-model="list.name">
                     </div>
+                    <small class="has-text-danger" v-if="errors.name">{{ errors.name[0] }}</small>
                 </div>
                 <div class="field">
                     <label class="label">Phone</label>
                     <div class="control">
-                        <input class="input" type="number" placeholder="Phone" v-model="list.phone">
+                        <input :class="{'is-danger': errors.phone}" class="input" type="number" placeholder="Phone" v-model="list.phone">
                     </div>
+                    <small class="has-text-danger" v-if="errors.phone">{{ errors.phone[0] }}</small>
                 </div>
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control">
-                        <input class="input" type="email" placeholder="Email" v-model="list.email">
+                        <input :class="{'is-danger': errors.email}" class="input" type="email" placeholder="Email" v-model="list.email">
                     </div>
+                    <small class="has-text-danger" v-if="errors.email">{{ errors.email[0] }}</small>
                 </div>
             </section>
             <footer class="modal-card-foot">
@@ -45,7 +48,8 @@
                     name: '',
                     phone: '',
                     email:''
-                }
+                },
+                errors: {}
             }
         },
         methods: {
@@ -58,7 +62,7 @@
                     this.dismissModal();
                 })
                 .catch((error) => {
-                    console.log(error);
+                    this.errors = error.response.data.errors;
                 })
             }
         }
